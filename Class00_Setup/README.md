@@ -23,4 +23,4 @@ Give your project an easy and well enough descriptive name for its main purpose 
 ![](gcp_create_project.png)
 
 
-These steps being complete, it's time to start class 01 :).
+These steps being complete, it's time to start [class 01](../Class01_Arrays_And_Structs/README.md) :).

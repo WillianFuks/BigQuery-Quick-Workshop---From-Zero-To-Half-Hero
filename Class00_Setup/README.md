@@ -10,10 +10,18 @@ Still, if you by any chance already used all those credits, as Google offers fre
 
 Those probably are the good news ;).
 
-# GCP Projects
+## GCP Projects
 
 If you created an account in GCP, it's recommended to create a new project in your account to work with BigQuery and set up IAM requirements.
 
 In your [GCP Console](https://console.cloud.google.com), click on "Select Project" on the left-upper coner and then chose "Create New Project" as shown in the image below:
 
 ![](gcp_new_project.png)
+
+Give your project an easy and well enough descriptive name for its main purpose (the ID has to be globally unique). For our workshop, calling it something like "bqworkshop" should already be good enough:
+
+![](gcp_create_project.png)
+
+(remember to choose an appropriate organization if the option applies to you).
+
+These steps being complete, it's time to start class 01 :).

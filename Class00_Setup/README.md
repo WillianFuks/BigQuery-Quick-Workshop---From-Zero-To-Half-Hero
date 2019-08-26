@@ -18,10 +18,9 @@ In your [GCP Console](https://console.cloud.google.com), click on "Select Projec
 
 ![](gcp_new_project.png)
 
-Give your project an easy and well enough descriptive name for its main purpose (the ID has to be globally unique). For our workshop, calling it something like "bqworkshop" should already be good enough:
+Give your project an easy and well enough descriptive name for its main purpose (the ID has to be globally unique). For our workshop, calling it something like "bqworkshop" should already be good enough (remember to choose an appropriate organization if the option applies to you):
 
 ![](gcp_create_project.png)
 
-(remember to choose an appropriate organization if the option applies to you).
 
 These steps being complete, it's time to start class 01 :).

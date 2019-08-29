@@ -1,6 +1,6 @@
 # BigQuery-Workshop-From-Zero-To-Half-Hero
 
-Welcome to this BigQuery Quick&Dirty Workshop!
+Welcome to this BigQuery quick and dirty somewhat Workshop!
 
 This is intended to be a quick and simple tutorial about BigQuery; won't make you a hero but will get you somewhat half there. We hope.
 

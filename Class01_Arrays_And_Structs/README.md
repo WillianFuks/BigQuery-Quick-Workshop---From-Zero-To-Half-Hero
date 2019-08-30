@@ -121,8 +121,12 @@ Then it keeps scaning through the data to find the value "en" which happens insi
 
 Now there's one issue: the next value is `NULL`; it still has to be represented as otherwise BigQuery can't reconstruct the record properly. It woudn't know for instance whether there's an empty value there or if it's some value associated to other repeated field.
 
-Dremel solves this by pretending there's a dummy `NULL` value there; it gets represented with `r=1` since *Language* did not receive but *Name* did, which is represented by 1:
+Dremel solves this by pretending there's a dummy `NULL` value there; it gets represented with `r=1` since *Language* did not appear but *Name* did, which represents the value 1:
 
+<p align="center">
+  <img src="./images/third_code_value.png">
+</p>
 
+Finally, when BigQuery sees the last value, 
 
 

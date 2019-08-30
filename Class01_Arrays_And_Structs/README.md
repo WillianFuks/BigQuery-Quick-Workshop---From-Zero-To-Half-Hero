@@ -95,7 +95,7 @@ If we just save all values of a given node in a colunar format file, it won't be
 
 For fixing this, Capacitor saves for each value in our tree data two additional columns: *repetition (r)* and *definition level (d)*.
 
-"repetition" is a number that indicates which repeated field the current value belongs to.
+"repetition" is a number that indicates which repeated field has repeated for the current value.
 
 Sounds complicated and understanding it requires reading through some examples; let's see with our previous data to understand it better. To begin with, here's a full table of Capacitor files that would be saved in Colossus for our document data:
 
@@ -105,9 +105,9 @@ Sounds complicated and understanding it requires reading through some examples; 
 
 Let's exam the field *Name.Language.Code*; the file would have the values "en-us", "en" and "en-gb".
 
-In *Code* path we have two repeated fields, *Name* and *Language*. Therefore, r varies between 0 and 2; 0 (zero) indicates it's the very first time we are observing the value; 1 means *Name* has repeated and 2, *Language*:
+In *Code* path we have two repeated fields, *Name* and *Language*. Therefore, r varies between 0 and 2; 0 (zero) indicates it's the very first time we are observing the value; 1 means *Name* has repeated and 2, field *Language*.
 
-So when BigQuery scans down through Colossus in this case it first finds the value "en-us". It's the first time the value has appeared in the *Name.Language.Code* path so it receives a zero:
+So when BigQuery scans down through Colossus, in this case, it first finds the value "en-us"; as it's the first time the value has appeared in the *Name.Language.Code* path, it receives a zero:
 
 <p align="center">
   <img src="./images/first_code_value.png">
@@ -119,7 +119,7 @@ Then it keeps scaning through the data to find the value "en" which happens insi
   <img src="./images/second_code_value.png">
 </p>
 
-Now there's one issue: the next value is `NULL`; it still has to be represented as otherwise BigQuery can't reconstruct the record properly. It woudn't know for instance whether there's an empty value there or if it's some value associated to other repeated field.
+Now there's one issue: the next value is `NULL`; it still has to be represented as otherwise BigQuery can't reconstruct the record properly. It woudn't know, for instance, whether there's an empty value there or if it's some value associated to other repeated field.
 
 Dremel solves this by pretending there's a dummy `NULL` value there; it gets represented with `r=1` since *Language* did not appear but *Name* did, which represents the value 1:
 
@@ -127,6 +127,17 @@ Dremel solves this by pretending there's a dummy `NULL` value there; it gets rep
   <img src="./images/third_code_value.png">
 </p>
 
-Finally, when BigQuery sees the last value, 
+Finally, when BigQuery sees the last value, the field *Name* is the one who repeated, not *Language* (so it knows this value belongs to another tree associated to another *Name* branch); given it was *Name* the repeated field, it should receive value 1 then:
+
+<p align="center">
+  <img src="./images/fourth_code_value.png">
+</p>
+
+But knowing just the repetition index wouldn't allow Dremel to fully reconstruct the record; problem arises when we have `NULL` values at some point in the tree structure; having only the repetition wouldn't allow a full reconstruction as the information about which level is actually missing wouldn't be available.
+
+For instance, suppose that *Code* is no longer a required field. When its value is `NULL`, how could we know whether it's related to field *Code* or *Language* being missing?
+
+That's where the *definition level (d)* comes into play. It represents how many fields in the path were actually defined. BigQuery uses this information to know at which level in the tree the `NULL`s values are actually happening.
+
 
 

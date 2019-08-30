@@ -109,6 +109,8 @@ The field *Code* has up to 3 branches in the tree strucute: first we have Name, 
 
 As we follow through the tree, first value we observe is "en-us". At this point, the first field in *Code* path that repeated is the field *Name* so we save it as a 0 which means "beginning of the record":
 
-
+<p align="center">
+  <img src="./images/first_code_value.png">
+</p>
 
 

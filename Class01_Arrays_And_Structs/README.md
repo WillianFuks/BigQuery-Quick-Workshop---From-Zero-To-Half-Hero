@@ -95,22 +95,22 @@ If we just save all values of a given node in a colunar format file, it won't be
 
 For fixing this, Capacitor saves for each value in our tree data two additional columns: *repetition (r)* and *definition level (d)*.
 
-The first is a number that represents at which field in the path a given value has repeated.
+"repetition" is a number that indicates which repeated field the current value belongs to.
 
-Doesn't sound simple but it actually is. Let's see an example with our previous data to understand it better. Here's a full table of what would be saved as Capacitor files in Colossus:
+Sounds complicated and understanding it requires reading through some examples; let's see with our previous data to understand it better. To begin with, here's a full table of Capacitor files that would be saved in Colossus for our document data:
 
 <p align="center">
   <img src="./images/dremel_r_d_example.png">
 </p>
 
-Let's examn the field *Name.Language.Code*. We would save in our field file the values "en-us", "en" and "en-gb".
+Let's exam the field *Name.Language.Code*; the file would have the values "en-us", "en" and "en-gb".
 
-The field *Code* has up to 3 branches in the tree strucute: first we have Name, then Language and finally Code. As it's used 0 index values, Name is 0, Language is 1 and finally Code is 2.
+In *Code* path we have two repeated fields, *Name* and *Language*. Therefore, r varies between 0 and 2; 0 (zero) indicates it's the very first time we are observing the value; 1 means *Name* has repeated and 2, *Language*:
 
-As we follow through the tree, first value we observe is "en-us". At this point, the first field in *Code* path that repeated is the field *Name* so we save it as a 0 which means "beginning of the record":
+So when BigQuery scans down through Colossus in this case it first finds the value "en-us". It's the first time the value has appeared in the *Name.Language.Code* path so it receives a zero:
 
 <p align="center">
   <img src="./images/first_code_value.png">
 </p>
 
-
+Then it keeps scaning through the data to find the value "en" which happens inside the *Language* repeated field; it receives, therefore, value 2.

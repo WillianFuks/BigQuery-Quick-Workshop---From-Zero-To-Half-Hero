@@ -139,5 +139,14 @@ For instance, suppose that *Code* is no longer a required field. When its value 
 
 That's where the *definition level (d)* comes into play. It represents how many fields in the path were actually defined. BigQuery uses this information to know at which level in the tree the `NULL`s values are actually happening.
 
+Here's an example with the field *Country* which is not required:
 
+<p align="center">
+  <img src="./images/definition_level.png">
+</p>
+
+Last thing to know about the storage strategies for BigQuery is that it still separates our files into different shards which works basically as partitions of data; we don't have control over how the system creates and manages those divisions, it runs its own optimizations to figure out what an appropriate setup is for our data.
+
+
+Finally, this is how our data is encoded when saved to Colossus. Basically when we run queries, there are different techniques running in the background to reconstruct the whole record; for us, enough to think of data as a json-like object and we'll be using BigQuery to manipulate this json as effectively as possible. Efficiency means processing the most information with the least amount of slots being allocated to our queries.
 

@@ -97,6 +97,18 @@ For fixing this, Capacitor saves for each value in our tree data two additional 
 
 The first is a number that represents at which field in the path a given value has repeated.
 
-Doesn't sound simple but it actually is. Let's see an example with our previous data to understand it better:
+Doesn't sound simple but it actually is. Let's see an example with our previous data to understand it better. Here's a full table of what would be saved as Capacitor files in Colossus:
+
+<p align="center">
+  <img src="./images/dremel_r_d_example.png">
+</p>
+
+Let's examn the field *Name.Language.Code*. We would save in our field file the values "en-us", "en" and "en-gb".
+
+The field *Code* has up to 3 branches in the tree strucute: first we have Name, then Language and finally Code. As it's used 0 index values, Name is 0, Language is 1 and finally Code is 2.
+
+As we follow through the tree, first value we observe is "en-us". At this point, the first field in *Code* path that repeated is the field *Name* so we save it as a 0 which means "beginning of the record":
+
+
 
 

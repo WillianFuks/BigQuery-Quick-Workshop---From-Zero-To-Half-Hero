@@ -24,6 +24,6 @@ After setting up BigQuery, you can head over to its web UI https://console.cloud
 
 ![](./images/bq_webui.png)
 
-These steps being complete, it's time to start [Class 01](../Class01_Arrays_And_Structs/README.md).
+These steps being complete, it's time to start [Class 01](../Class01_Introduction/README.md).
 
 Let's go ;)!

@@ -85,8 +85,18 @@ It could also be represented by something that resembles a json-like format (thi
 
 Not only does Dremel work with nested data but also it follows a colunar type of storage; this is expected, most databases working with massive amounts of data uses this approach due advantages such as better degrees of compression and faster processing times; each field we have in our database is saved as a capacitor file containing all data of each column independently.
 
-But, this is not a very straightforward thing to do. Keep in mind that every single record we have in our database has to be divided in its tree like structure and saved in a colunar format; bellow we see a representation of the differences:
+But, this is not a very straightforward thing to do. Keep in mind that every single record we have in our database has to be divided in its tree like structure and saved in a colunar format; bellow we see a representation of that:
 
+<p align="center">
+  <img src="./images/dremel_data_structure.png">
+</p>
 
+If we just save all values of a given node in a colunar format file, it won't be possible anymore to know when a given record started and when it ended or what values belong to a repeated field or not.
+
+For fixing this, Capacitor saves for each value in our tree data two additional columns: *repetition (r)* and *definition level (d)*.
+
+The first is a number that represents at which field in the path a given value has repeated.
+
+Doesn't sound simple but it actually is. Let's see an example with our previous data to understand it better:
 
 

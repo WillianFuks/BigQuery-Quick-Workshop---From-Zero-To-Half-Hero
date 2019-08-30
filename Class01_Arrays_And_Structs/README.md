@@ -145,8 +145,34 @@ Here's an example with the field *Country* which is not required:
   <img src="./images/definition_level.png">
 </p>
 
-Last thing to know about the storage strategies for BigQuery is that it still separates our files into different shards which works basically as partitions of data; we don't have control over how the system creates and manages those divisions, it runs its own optimizations to figure out what an appropriate setup is for our data.
+Last thing to know about the storage strategies for BigQuery is that it still separates our files into different shards which works basically as partitions of data; we don't have control over how the system creates and manages those divisions, it runs its own optimizations to figure out what an appropriate setup is for our data. End result is shown below:
+
+<p align="center">
+  <img src="./images/shards.png">
+</p>
+
+Finally, this is how our data is encoded when saved to Colossus. Basically, when we run queries, there are different techniques running in the background to reconstruct the whole record; for us, enough to think of data as a json-like object that makes processing data more efficient.
+
+By "efficient" we mean processing the most information with the least amount of slots being allocated to our queries. Talking about slots, time to dive into Dremel architecture.
+
+### Dremel
+
+Probably Dremel could be considered sort of like "the brain" of the whole thing. Colossus stores all of our data using Capacitor files; when queried over, they are brought to the processing server through the Jupyter network. Now, the one managing who process what, when and how is Dremel.
+
+Funny thing is, it also works by building a tree like structure with different servers on each branch; it all starts in the root server that receives our query. 
+
+Say, using our previous example data, that we sent a query like (not a valid query, just for learning purpose):
+
+```sql
+SELECT
+  Country,
+  COUNT(Country) AS freq
+FROM `table`
+```
+
+That query would first be sent to Dremel in a root server.
+
+This node then divides the query into different servers known as the "Mixers" which works with specifics shards; processing is finally handled to leaf node servers that have access to Colossus. Results are then brought back to mixers where operations such as aggretation or filtering happens and the cycle repeats through the root server until final result is consolidated.
 
 
-Finally, this is how our data is encoded when saved to Colossus. Basically when we run queries, there are different techniques running in the background to reconstruct the whole record; for us, enough to think of data as a json-like object and we'll be using BigQuery to manipulate this json as effectively as possible. Efficiency means processing the most information with the least amount of slots being allocated to our queries.
 

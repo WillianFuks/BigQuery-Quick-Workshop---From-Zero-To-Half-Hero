@@ -172,7 +172,20 @@ FROM `table`
 
 That query would first be sent to Dremel in a root server.
 
-This node then divides the query into different servers known as the "Mixers" which works with specifics shards; processing is finally handled to leaf node servers that have access to Colossus. Results are then brought back to mixers where operations such as aggretation or filtering happens and the cycle repeats through the root server until final result is consolidated.
+This node then divides the query into different servers known as the "Mixers" which works with specifics shards; processing is finally handled to leaf node servers that have access to Colossus. Results are then brought back to mixers where operations such as aggretation or filtering happens and the cycle repeats through the root server until final result is consolidated:
 
+<p align="center">
+  <img src="./images/leaf_nodes.png">
+</p>
 
+Notice that the paradigm is to actually bring hardware to data: the more demanding the query is, the more mixers and leaf nodes are brought together to process the query.
 
+Each application running on the leaf nodes have a certain number of threads: each *thread* is called a *slot*.
+
+This is important to keep in mind: BigQuery service comes with 2000 slots available for processing your demands (while it's still possible to increase this value by getting in contact with Google representatives, if you know how to properly use BigQuery that chances of you needing that is extremely low).
+
+As we'll be studying soon, the less optimized are the queries we send against BigQuery, the more slots will be required for the processing step which may, eventually, stop the tool from working optimally and slower its operations.
+
+One of the best techniques for being effective in BigQuery is to deeply understand how to leverage its nested data paradigm. In fact, let's start some hands-on experience now.
+
+Enough with introduction and concepts, time for getting our hands dirty. Let's move on to Class 02 where we'll start learning about Arrays and Structs :)!

@@ -58,7 +58,9 @@ This follows a tree like structure that is represented (using the jargon as pres
   <img src="./images/dremel_tree_example.png">
 </p>
 
-Here we have two documents and their respective schema; it could also be represented by something that resembles a json-like format:
+The symbol *?* means the field is optional; + means it's repeated and required; \* means optional repeated.
+
+It could also be represented by something that resembles a json-like format (this might help some to better visualize the data):
 
 ```
 [
@@ -81,7 +83,9 @@ Here we have two documents and their respective schema; it could also be represe
 ]
 ```
 
+Not only does Dremel work with nested data but also it follows a colunar type of storage; this is expected, most databases working with massive amounts of data uses this approach due advantages such as better degrees of compression and faster processing times. This means that each field we have in our database is saved as a capacitor file containing all data of each column independently.
 
+But, this is not that easy to accomplish. 
 
 
 

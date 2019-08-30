@@ -1,6 +1,6 @@
-# Class 01: Arrays and Structs
+# Class 01: Introduction
 
-## Introduction
+## Overview
 
 BigQuery is a powerful serverless database service fully hosted by Google capable of processing terabytes of data in a few seconds.
 
@@ -188,4 +188,4 @@ As we'll be studying soon, the less optimized are the queries we send against Bi
 
 One of the best techniques for being effective in BigQuery is to deeply understand how to leverage its nested data paradigm. In fact, let's start some hands-on experience now.
 
-Enough with introduction and concepts, time for getting our hands dirty. Let's move on to Class 02 where we'll start learning about Arrays and Structs :)!
+Enough with introduction and concepts, time for getting our hands dirty. Let's move on to [Class 02](../Class02_Arrays_And_Structs/README.md) where we'll start learning about Arrays and Structs!

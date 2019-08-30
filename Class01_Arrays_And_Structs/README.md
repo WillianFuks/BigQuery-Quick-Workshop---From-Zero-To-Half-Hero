@@ -42,15 +42,44 @@ Now, as just mentioned, Colossus saves data in Capacitor format which is used by
 
 Here is one of the main points that makes BigQuery as powerful as it is: Dremel is fully designed to work with *nested data*.
 
-Now, we should say, it gets practice to feel comfortable working with this type of data but once you master it, there's virtually no demand that comes into your way where you won't be able to effectively extract insights and answers to your clients.
+Now, we should say, it gets practice to feel comfortable working with this type of data but once you master it, there's virtually no demand that comes into your way where you won't be able to effectively extract insights and answers to your demands.
 
-You can think of nested data as a tree like structure that describes values and their correlations within; it can be represented by a json format and in fact, if you think about jsons when using BigQuery, this can already be quite helpful.
+You can think of nested data as a tree like structure that describes values and their relations between nodes; it can be thought as of a json-like format and, in fact, if you think about jsons when using BigQuery this can already be quite helpful when building queries.
 
 To visualize it, let's see an example extracted from the Dremel paper as presented by Google:
 
+<p align="center">
+  <img src="./images/dremel_data_example.png">
+</p>
 
+This follows a tree like structure that is represented (using the jargon as presented in Dremel's paper) as:
 
+<p align="center">
+  <img src="./images/dremel_tree_example.png">
+</p>
 
+Here we have two documents and their respective schema; it could also be represented by something that resembles a json-like format:
+
+```
+[
+    {
+        "DocId": 10,
+        "Links": [{"Forward": 20}, {"Forward": 40}, {"Forward": 60}],
+        [
+            {"Name": [{"Language": {"Code": "en-us", "Country": "us"}}, {"Language": {"Code": "en"}}], "Url": "http://A"},
+            {"Name": [{"Url": "http://B"}]},
+            {"Name": [{"Language": {"Code": "en-gb", "Country": "gb"}}]}
+        ]
+    },
+    {
+        "DocId": 20,
+        "Links": [{"Backward": 10}, {"Backward": 30}, {"Forward": 80}],
+        [
+            {"Name": [{"Url": "http://C"}]}
+        ]
+    }
+]
+```
 
 
 

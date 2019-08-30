@@ -83,9 +83,9 @@ It could also be represented by something that resembles a json-like format (thi
 ]
 ```
 
-Not only does Dremel work with nested data but also it follows a colunar type of storage; this is expected, most databases working with massive amounts of data uses this approach due advantages such as better degrees of compression and faster processing times. This means that each field we have in our database is saved as a capacitor file containing all data of each column independently.
+Not only does Dremel work with nested data but also it follows a colunar type of storage; this is expected, most databases working with massive amounts of data uses this approach due advantages such as better degrees of compression and faster processing times; each field we have in our database is saved as a capacitor file containing all data of each column independently.
 
-But, this is not that easy to accomplish. 
+But, this is not a very straightforward thing to do. Keep in mind that every single record we have in our database has to be divided in its tree like structure and saved in a colunar format; bellow we see a representation of the differences:
 
 
 

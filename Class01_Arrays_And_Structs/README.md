@@ -62,12 +62,12 @@ The symbol *?* means the field is optional; + means it's repeated and required; 
 
 It could also be represented by something that resembles a json-like format (this might help some to better visualize the data):
 
-```
+```json
 [
     {
         "DocId": 10,
         "Links": [{"Forward": 20}, {"Forward": 40}, {"Forward": 60}],
-        [
+        "f0_": [
             {"Name": [{"Language": {"Code": "en-us", "Country": "us"}}, {"Language": {"Code": "en"}}], "Url": "http://A"},
             {"Name": [{"Url": "http://B"}]},
             {"Name": [{"Language": {"Code": "en-gb", "Country": "gb"}}]}
@@ -76,7 +76,7 @@ It could also be represented by something that resembles a json-like format (thi
     {
         "DocId": 20,
         "Links": [{"Backward": 10}, {"Backward": 30}, {"Forward": 80}],
-        [
+        "f0_": [
             {"Name": [{"Url": "http://C"}]}
         ]
     }
@@ -113,4 +113,16 @@ So when BigQuery scans down through Colossus in this case it first finds the val
   <img src="./images/first_code_value.png">
 </p>
 
-Then it keeps scaning through the data to find the value "en" which happens inside the *Language* repeated field; it receives, therefore, value 2.
+Then it keeps scaning through the data to find the value "en" which happens inside the *Language* repeated field; it receives, therefore, value 2:
+
+<p align="center">
+  <img src="./images/second_code_value.png">
+</p>
+
+Now there's one issue: the next value is `NULL`; it still has to be represented as otherwise BigQuery can't reconstruct the record properly. It woudn't know for instance whether there's an empty value there or if it's some value associated to other repeated field.
+
+Dremel solves this by pretending there's a dummy `NULL` value there; it gets represented with `r=1` since *Language* did not receive but *Name* did, which is represented by 1:
+
+
+
+
